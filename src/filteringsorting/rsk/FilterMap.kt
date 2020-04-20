@@ -1,5 +1,9 @@
 package filteringsorting.rsk
 
+fun iter(seq: Sequence<String>) {
+    for (t in seq) println(t)
+}
+
 fun main() {
     val ints = listOf(1, 2, 3, 4, 5)
 
@@ -19,9 +23,22 @@ fun main() {
 
     val meetings = listOf(Meeting(1, "Board Meeting"), Meeting(2, "Committee Meeting"))
 
-    val titles: List<String> = meetings
-                                    .filter { it.title.startsWith("C")}
-                                    .map { m -> m.title}
+//    val titles = meetings
+//                    .asSequence()
+//                    .filter { it.title.startsWith("C")}
+//                    .map { m -> m.title}
 
-    for (t in titles) println(t)
+    val titles: Sequence<String> = meetings
+                                        .asSequence()
+                                        .filter { println("filter($it)"); it.title.endsWith("g")}
+                                        .map { println("map($it)"); it.title}
+
+    iter(titles)
+
+    val title = meetings
+                    .asSequence()
+                    .map{ println("map($it)"); it.title.toUpperCase() }
+                    .find { it.startsWith("BOARD") }
+
+    println(title)
 }
